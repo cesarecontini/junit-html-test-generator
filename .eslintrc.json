@@ -1,0 +1,17 @@
+{
+    "env": {
+        "jest/globals": true
+    },
+    "extends": ["airbnb", "prettier", "plugin:prettier/recommended", "plugin:jest/recommended"],
+    "plugins": ["prettier", "jest"],
+    "rules": {
+        "no-console": "off",
+        "prettier/prettier": ["error"],
+        "linebreak-style": 0,
+        "jest/no-disabled-tests": "warn",
+        "jest/no-focused-tests": "error",
+        "jest/no-identical-title": "error",
+        "jest/prefer-to-have-length": "warn",
+        "jest/valid-expect": "error"
+    }
+}
