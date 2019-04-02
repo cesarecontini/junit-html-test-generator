@@ -3,7 +3,7 @@ module.exports = {
         pageTestedPath: '/some-path',
         rootNodeSelector: '#main',
         childElementsSelector: '[id]',
-        tagsToExclude: [],
+        tagsToExclude: ['input', 'form', 'select', 'table'],
         manuallyProvidedHtml : `
             <html>
                 <head></head>
@@ -12,7 +12,7 @@ module.exports = {
                         <p id="par-1">This is paragraph 1</p>
                         <p id="par-2">This is paragraph 2</p>
                         <p>
-                            <a id="a-link" href="/some-link-path"></a>
+                            <a id="a-link" href="/some-link-path">A link label</a>
                         </p>
                     </div>
                 </body>

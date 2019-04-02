@@ -35,7 +35,7 @@ const getSettings = () => {
 }
 
 const isTagToExclude = (tagName, tagsToExclude) => {
-    return tagsToExclude.indexOf(tagName) === -1;
+    return tagsToExclude.indexOf(tagName.toLowerCase()) !== -1;
 };
 
 const printTestMethodInConsole = opts => {
@@ -66,7 +66,9 @@ const printTestMethodInConsole = opts => {
             const text = $(this).text();
             console.log(`.andExpect(MockMvcResultMatchers.xpath("//${tagName.toLowerCase()}[@id='${id}']").exists())`);
 
-            if (isTagToExclude(tagName, tagsToExclude)) {
+            //  console.log('tagsToExclude===================', tagName, isTagToExclude(tagName, tagsToExclude))
+
+            if (!isTagToExclude(tagName, tagsToExclude)) {
                 console.log(
                     `.andExpect(MockMvcResultMatchers.xpath("//${tagName.toLowerCase()}[@id='${id}']")
                         .string(Matchers.equalToIgnoringWhiteSpace("${text
@@ -100,6 +102,23 @@ const printTestMethodInConsole = opts => {
                 );
             }
 
+            if (tagName && tagName.toLowerCase() === 'input') {
+                const type = $(this).attr('type');
+                console.log(
+                    `.andExpect(MockMvcResultMatchers.xpath("//${tagName.toLowerCase()}[@id='${id}']/@type").string("${type}"))`
+                );
+
+                if (type === 'radio' || type === 'checkbox')
+                {
+                    const checked = $(this).attr('checked');
+                    if(checked) {
+                         console.log(
+                             `.andExpect(MockMvcResultMatchers.xpath("//${tagName.toLowerCase()}[@id='${id}']/@checked").string("${checked}"))`
+                         );
+                    }
+                }
+            }
+            
             if (tagName && tagName.toLowerCase() === 'select') {
                 const options = $(this).find('option');
                 console.log(
@@ -121,6 +140,15 @@ const printTestMethodInConsole = opts => {
                         console.log(
                             `.andExpect(MockMvcResultMatchers.xpath("//${tagName.toLowerCase()}[@id='${id}']/option[${i + 1}]/@value")
                             .string(Matchers.equalToIgnoringWhiteSpace("${optionValue}")))`
+                        );
+                    }
+
+                    const selected = $(this).attr('selected');
+                    if(selected) {
+                        console.log(
+                            `.andExpect(MockMvcResultMatchers.xpath("//${tagName.toLowerCase()}[@id='${id}']/option[${i + 1}]/@selected")
+                            .string(Matchers.equalToIgnoringWhiteSpace("${selected}")))
+                            `
                         );
                     }
                 });
