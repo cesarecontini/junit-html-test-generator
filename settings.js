@@ -20,13 +20,18 @@ module.exports = {
         `,
         getHtmlViaPuppeteer: async (puppeteer) => {
 
-            const prefixUrl = 'http://localhost:8080';
-            const initialPage = `${prefixUrl}/some-path`;
-
+            const prefixUrl = 'https://duckduckgo.com';
+            const initialPage = `${prefixUrl}`;
+            const screenshot = 'screenshot.png';
             const browser = await puppeteer.launch();
             const page = await browser.newPage();
+            await page.setViewport({
+                width: 1280,
+                height: 800
+            })
 
             console.log(`About to go into ${initialPage}`);
+            console.log(`Loading ${initialPage}`);
             await page.goto(`${initialPage}`, {
                 timeout: 0,
                 waitUntil: 'networkidle2',
@@ -39,12 +44,11 @@ module.exports = {
             // await page.type('#login_field', 'some username');
             // await page.type('#password', 'some password');
             // await page.click('[id="signin"]'); // selector for login button
-            // await page.waitForNavigation();
-            console.log(`Loading ${initialPage}`);
-            await page.goto(`${initialPage}`, {
-                timeout: 0,
-                waitUntil: 'networkidle2',
-            });
+            // await page.waitForNavigation();            
+            // await page.goto(`${initialPage}`, {
+            //     timeout: 0,
+            //     waitUntil: 'networkidle2',
+            // });
 
             await page.screenshot({
                 path: screenshot,

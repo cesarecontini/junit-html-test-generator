@@ -39,6 +39,7 @@ const isTagToExclude = (tagName, tagsToExclude) => {
 };
 
 const printTestMethodInConsole = opts => {
+
     const testElements = opts.testElements;
     const html = testElements.manuallyProvidedHtml;
     const path = testElements.pageTestedPath;
@@ -162,19 +163,16 @@ const printTestMethodInConsole = opts => {
     `);
 };
 
-const getHtmlViaPuppeteer = opts => {
+const getHtmlViaPuppeteer = settings => {
     console.log(chalkPipe('orange.bold')(`${appName} is starting....`));
 
     const screenshot = 'screenshot.png';
     try {
         (async () => {
-
-            const html = await opts.testElements.getHtmlViaPuppeteer(puppeteer);
-            printTestMethodInConsole({
-                html: html,
-                path: settings.testElements.pageTestedPath,
-                testElements: settings.testElements
-            });
+            console.log('....')
+            const html = await settings.testElements.getHtmlViaPuppeteer(puppeteer);
+            settings.testElements.manuallyProvidedHtml = html;
+            printTestMethodInConsole(settings);
         
         })();
     } catch (err) {
