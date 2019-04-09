@@ -65,11 +65,13 @@ const printTestMethodInConsole = opts => {
             const tagName = $(this).prop('tagName');
             const id = this.id;
             const text = $(this).text();
-            console.log(`.andExpect(MockMvcResultMatchers.xpath("//${tagName.toLowerCase()}[@id='${id}']").exists())`);
+            const isIdSet = id && id !== '';
 
-            //  console.log('tagsToExclude===================', tagName, isTagToExclude(tagName, tagsToExclude))
+            if (isIdSet) {
+                console.log(`.andExpect(MockMvcResultMatchers.xpath("//${tagName.toLowerCase()}[@id='${id}']").exists())`);
+            }
 
-            if (!isTagToExclude(tagName, tagsToExclude)) {
+            if (isIdSet && !isTagToExclude(tagName, tagsToExclude)) {
                 console.log(
                     `.andExpect(MockMvcResultMatchers.xpath("//${tagName.toLowerCase()}[@id='${id}']")
                         .string(Matchers.equalToIgnoringWhiteSpace("${text

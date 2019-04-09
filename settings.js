@@ -1,9 +1,9 @@
 module.exports = {
     testElements: {
         pageTestedPath: '/some-path',
-        rootNodeSelector: '#main',
+        rootNodeSelector: 'body',
         childElementsSelector: '[id]',
-        tagsToExclude: ['input', 'form', 'select', 'table'],
+        tagsToExclude: ['input', 'form', 'select', 'table', 'iframe'],
         manuallyProvidedHtml : `
             <html>
                 <head></head>
